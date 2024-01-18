@@ -7,5 +7,6 @@ export interface FloatingText {
  export interface CookieClickerControlsProps {
     cookies: number;
     autoClickers: number;
+    clickPower: number;
     onBuyAutoClicker: () => void;
   }

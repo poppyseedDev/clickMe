@@ -11,6 +11,7 @@ const CookieClickerCanvas: React.FC = () => {
     const [isClient, setIsClient] = useState(false); // New state to control rendering
     const [cookies, setCookies] = useLocalStorage('cookies', 0) || 0;
     const [autoClickers, setAutoClickers] = useLocalStorage('autoClickers', 0) || 0; 
+    const [clickPower, setClickPower] = useLocalStorage('clickPower', 1) || 1; 
     const [cookiesPerClick, setCookiesPerClick] = useState<number>(1);
 
     function incrementCookies(amount: number) {
@@ -42,6 +43,7 @@ const CookieClickerCanvas: React.FC = () => {
       <CookieClickerControls
         cookies={cookies}
         autoClickers={autoClickers}
+        clickPower={clickPower}
         onBuyAutoClicker={buyAutoClicker}
       />
     </div>
