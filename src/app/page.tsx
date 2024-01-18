@@ -1,7 +1,6 @@
 'use client';
 
 import CookieClickerCanvas from '@/components/CookieClickerCanvas';
-import CookieClicker from '../components/CookieClicker';
 
 const Home: React.FC = () => {
   return (

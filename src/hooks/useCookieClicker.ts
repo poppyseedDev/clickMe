@@ -1,9 +1,14 @@
+// useCookieClicker.ts
 import { useState, useEffect, useCallback } from 'react';
 import { drawCookie, drawCookieCount, drawFloatingTexts } from '@/utils/canvasUtils';
 import { FloatingText } from '@/types';
 
-export const useCookieClicker = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
-  const [cookieCount, setCookieCount] = useState(0);
+export const useCookieClicker = (
+  canvasRef: React.RefObject<HTMLCanvasElement>, 
+  cookies: number, 
+  autoClickers: number, 
+  onCookieClick: () => void
+) => {
   const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([]);
   const [zoom, setZoom] = useState(1);
 
@@ -29,37 +34,36 @@ export const useCookieClicker = (canvasRef: React.RefObject<HTMLCanvasElement>) 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawCookie(ctx, cookieImage, zoom, canvas.width, canvas.height);
-      drawCookieCount(ctx, cookieCount);
+      drawCookieCount(ctx, cookies);
       drawFloatingTexts(ctx, floatingTexts);
-      updateFloatingTexts(); // Update floating texts positions and opacities
+      updateFloatingTexts(); 
       requestAnimationFrame(draw);
     };
 
     const handleCanvasClick = (event: MouseEvent) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-  
-        if (x > canvas.width / 2 - cookieImage.width * zoom / 2 && x < canvas.width / 2 + cookieImage.width * zoom / 2 &&
-            y > canvas.height / 2 - cookieImage.height * zoom / 2 && y < canvas.height / 2 + cookieImage.height * zoom / 2) {
-          setCookieCount((prevCount) => prevCount + 1);
-          setFloatingTexts((texts) => [
-            ...texts,
-            { x: x, y: y, opacity: 1 }, // Set the position to where the user clicks
-          ]);
-  
-          // Trigger zoom effect
-          setZoom(1.1);
-          setTimeout(() => setZoom(1), 100); // Reset zoom after 100ms
-        }
-      };
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      if (x > canvas.width / 2 - cookieImage.width * zoom / 2 && x < canvas.width / 2 + cookieImage.width * zoom / 2 &&
+          y > canvas.height / 2 - cookieImage.height * zoom / 2 && y < canvas.height / 2 + cookieImage.height * zoom / 2) {
+        onCookieClick();
+        setFloatingTexts((texts) => [
+          ...texts,
+          { x: x, y: y, opacity: 1 },
+        ]);
+
+        setZoom(1.1);
+        setTimeout(() => setZoom(1), 100);
+      }
+    };
 
     canvas.addEventListener('click', handleCanvasClick);
 
     return () => {
       canvas.removeEventListener('click', handleCanvasClick);
     };
-  }, [cookieCount, floatingTexts, zoom, updateFloatingTexts]);
+  }, [cookies, autoClickers, zoom, updateFloatingTexts, onCookieClick]);
 
-  return { setCookieCount, setFloatingTexts, setZoom };
+  return { setFloatingTexts, setZoom };
 };
