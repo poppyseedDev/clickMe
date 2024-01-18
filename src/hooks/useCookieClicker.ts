@@ -35,7 +35,7 @@ export const useCookieClicker = (
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawCookie(ctx, cookieImage, zoom, canvas.width, canvas.height);
       drawCookieCount(ctx, cookies);
-      drawFloatingTexts(ctx, floatingTexts);
+      drawFloatingTexts(ctx, floatingTexts, autoClickers);
       updateFloatingTexts(); 
       requestAnimationFrame(draw);
     };

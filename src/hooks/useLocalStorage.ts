@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 
 function useLocalStorage(key: string, initialValue: number): [number, (value: number) => void] {
   const [storedValue, setStoredValue] = useState<number>(() => {
+    if (typeof window === 'undefined') {
+      return initialValue; // Return initial value if not running in browser
+    }
     try {
       const item = window.localStorage.getItem(key);
       return item ? parseInt(item) : initialValue;
@@ -13,11 +16,13 @@ function useLocalStorage(key: string, initialValue: number): [number, (value: nu
   });
 
   const setValue = (value: number) => {
-    try {
-      setStoredValue(value);
-      window.localStorage.setItem(key, value.toString());
-    } catch (error) {
-      console.log(error);
+    if (typeof window !== 'undefined') {
+      try {
+        setStoredValue(value);
+        window.localStorage.setItem(key, value.toString());
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

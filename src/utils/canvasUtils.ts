@@ -12,11 +12,11 @@ export const drawCookie = (ctx: CanvasRenderingContext2D, cookieImage: HTMLImage
     ctx.fillText(`Bobas: ${cookieCount}`, 20, 40);
   };
   
-  export const drawFloatingTexts = (ctx: CanvasRenderingContext2D, floatingTexts: FloatingText[]) => {
+  export const drawFloatingTexts = (ctx: CanvasRenderingContext2D, floatingTexts: FloatingText[], incrementBy: number) => {
     floatingTexts.forEach((text) => {
       ctx.font = '20px Arial';
       ctx.fillStyle = `rgba(0, 0, 0, ${text.opacity})`;
-      ctx.fillText('+1', text.x, text.y);
+      ctx.fillText(`+${incrementBy}`, text.x, text.y);
     });
   };
   

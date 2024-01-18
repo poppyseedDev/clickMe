@@ -14,7 +14,7 @@ const CookieClickerControls: React.FC<CookieClickerControlsProps> = ({
         onClick={onBuyAutoClicker}
         disabled={cookies < AUTO_CLICKER_COST * (autoClickers + 1)}
       >
-        Buy Auto-Clicker (Cost: {AUTO_CLICKER_COST * (autoClickers + 1)} cookies)
+        Buy Auto-Clicker (Cost: {AUTO_CLICKER_COST * (autoClickers + 1)} bobas)
       </button>
       <p>Auto-Clickers: {autoClickers}</p>
     </>
