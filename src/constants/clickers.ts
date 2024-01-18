@@ -1,0 +1,1 @@
+export const AUTO_CLICKER_COST = 100;

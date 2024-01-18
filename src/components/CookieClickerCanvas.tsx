@@ -4,12 +4,12 @@ import { useCookieClicker } from '@/hooks/useCookieClicker';
 import useAutoClickers from '@/hooks/useAutoClicker';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import CookieClickerControls from '@/components/CookieClickerControls';
+import { AUTO_CLICKER_COST } from '@/constants/clickers';
 
 const CookieClickerCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [cookies, setCookies] = useLocalStorage('cookies', 0);
   const [cookiesPerClick, setCookiesPerClick] = useState<number>(1);
-  const [autoClickerCost, setAutoClickerCost] = useState<number>(100);
   function incrementCookies(amount: number) {
     setCookies(cookies + amount);
   }
@@ -19,9 +19,8 @@ const CookieClickerCanvas: React.FC = () => {
   const { setFloatingTexts, setZoom } = useCookieClicker(canvasRef, cookies, autoClickers, () => incrementCookies(cookiesPerClick));
 
   const buyAutoClicker = () => {
-    if (cookies >= autoClickerCost) {
-      setCookies(cookies - autoClickerCost);
-      setAutoClickerCost(autoClickerCost * 2);
+    if (cookies >= AUTO_CLICKER_COST * (autoClickers + 1)) {
+      setCookies(cookies - AUTO_CLICKER_COST * autoClickers);
       setAutoClickers(autoClickers + 1);
     }
   };
@@ -32,7 +31,6 @@ const CookieClickerCanvas: React.FC = () => {
       <CookieClickerControls
         cookies={cookies}
         autoClickers={autoClickers}
-        autoClickerCost={autoClickerCost}
         onBuyAutoClicker={buyAutoClicker}
       />
     </div>

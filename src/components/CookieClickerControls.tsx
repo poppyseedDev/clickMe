@@ -1,9 +1,10 @@
 // CookieClickerControls.tsx
 import React from 'react';
 import { CookieClickerControlsProps } from '@/types';
+import { AUTO_CLICKER_COST } from '@/constants/clickers';
 
 const CookieClickerControls: React.FC<CookieClickerControlsProps> = ({
-     cookies, autoClickers, autoClickerCost, onBuyAutoClicker 
+     cookies, autoClickers, onBuyAutoClicker 
     }) => {
   return (
     <>
@@ -11,9 +12,9 @@ const CookieClickerControls: React.FC<CookieClickerControlsProps> = ({
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={onBuyAutoClicker}
-        disabled={cookies < autoClickerCost}
+        disabled={cookies < AUTO_CLICKER_COST * (autoClickers + 1)}
       >
-        Buy Auto-Clicker (Cost: {autoClickerCost} cookies)
+        Buy Auto-Clicker (Cost: {AUTO_CLICKER_COST * (autoClickers + 1)} cookies)
       </button>
       <p>Auto-Clickers: {autoClickers}</p>
     </>
