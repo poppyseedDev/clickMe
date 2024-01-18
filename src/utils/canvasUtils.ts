@@ -1,4 +1,5 @@
-// canvasUtils.ts
+import { FloatingText } from '@/types';
+
 export const drawCookie = (ctx: CanvasRenderingContext2D, cookieImage: HTMLImageElement, zoom: number, canvasWidth: number, canvasHeight: number) => {
     const width = cookieImage.width * zoom;
     const height = cookieImage.height * zoom;
