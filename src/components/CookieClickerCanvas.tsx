@@ -9,15 +9,13 @@ import { AUTO_CLICKER_COST } from '@/constants/clickers';
 const CookieClickerCanvas: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isClient, setIsClient] = useState(false); // New state to control rendering
-    const [cookies, setCookies] = useLocalStorage('cookies', 0);
+    const [cookies, setCookies] = useLocalStorage('cookies', 0) || 0;
+    const [autoClickers, setAutoClickers] = useLocalStorage('autoClickers', 0) || 0; 
     const [cookiesPerClick, setCookiesPerClick] = useState<number>(1);
 
     function incrementCookies(amount: number) {
         setCookies(cookies + amount);
     }
-    const initialAutoClickers = typeof window !== 'undefined' ? parseInt(localStorage.getItem('autoClickers') || '0') : 0;
-
-    const { autoClickers, setAutoClickers } = useAutoClickers(initialAutoClickers, incrementCookies);
 
     const { setFloatingTexts, setZoom } = useCookieClicker(canvasRef, cookies, autoClickers, () => incrementCookies(cookiesPerClick));
 

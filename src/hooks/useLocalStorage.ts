@@ -8,7 +8,8 @@ function useLocalStorage(key: string, initialValue: number): [number, (value: nu
     }
     try {
       const item = window.localStorage.getItem(key);
-      return item ? parseInt(item) : initialValue;
+      const numberValue = Number(item);
+      return isNaN(numberValue) ? initialValue : numberValue;
     } catch (error) {
       console.log(error);
       return initialValue;
